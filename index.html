@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Programming Insights Tracker</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/cignal-favicon.ico">
+
+        <!-- App css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    </head>
+
+    <body class="loading authentication-bg">
+        <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xxl-5 col-lg-6">
+                        <div class="card">
+
+                            <!-- Logo Text -->
+                            <div class="card-header pt-3 pb-2 text-center text-white bg-primary">
+                                    <h4 class="text-dark-50 text-center pb-0 fw-bold"> Programming Insights Tracker</h4>
+                            </div>
+
+                            <div class="card-body p-3">
+                                
+                                <div class="text-center w-75 m-auto">
+                                    <p class="text-muted mb-3">Track and analyze programming insights and trends.</p>
+                                </div>
+
+                                <form onsubmit="submitData(); return false;">
+                                    <div class="mb-3">
+                                        <label for="irn" class="form-label">IRN</label>
+                                        <input class="form-control text-dark" id="irn" required="" placeholder="Enter IRN">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="channel" class="form-label">Channel</label>
+                                        <select class="form-control select2 text-dark" id="channel" required="" data-toggle="select2" onchange="toggleOthers()">
+                                            <option value="" disabled selected hidden>Select a channel...</option>
+                                        </select>
+
+                                        <input class="form-control text-dark" id="channel_others" placeholder="Please specify..." style="display: none;">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="content" class="form-label">Content/Show</label>
+                                        <input class="form-control text-dark" id="content" required="" placeholder="Enter Content/Show">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="concern" class="form-label">Concern</label>
+                                        <select class="form-select text-dark" id="concern" required="" onchange="toggleOthers()">
+                                            <option value="" disabled selected hidden>Select a concern...</option>
+                                        </select>
+
+                                        <input class="form-control text-dark" id="concern_others" placeholder="Specify concern" style="display: none;">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="verbatim" class="form-label">Verbatim</label>
+                                        <textarea class="form-control text-dark" id="verbatim" rows="3" resize="none" placeholder="Comments"></textarea>
+                                    </div>
+
+                                    <div class="mb-3 mb-0 text-center">
+                                        <button class="btn btn-primary" id="submitBtn" type="submit"> Submit </button>
+                                    </div>
+                                </form>
+                            </div> <!-- end card-body -->
+                        </div>
+                        <!-- end card -->
+
+                    </div> <!-- end col -->
+                </div>
+                <!-- end row -->
+
+                <!-- Toast Container -->
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                    <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <div class="d-flex align-items-center">
+                                    <strong class="me-auto">Success!</strong>
+                                </div>
+                                Insight Logged Successfully!
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end container -->
+        </div>
+        <!-- end page -->
+
+        <footer class="footer footer-alt">
+            <small>2026 &copy; Developed by <strong>WFMRA</strong> Team - Customer Experience Group</small>
+        </footer>
+
+        <!-- function -->
+        <script src="funtions/base.js"></script>
+
+        <!-- bundle -->
+        <script src="assets/js/vendor.min.js"></script> 
+        <script src="assets/js/app.min.js"></script> 
+        
+    </body>
+</html>
