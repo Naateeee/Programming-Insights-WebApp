@@ -53,7 +53,7 @@ function populateDropdown(elementId, dataArray) {
     });
 }
 
-// Initialize everything on load
+// Initialize on load
 document.addEventListener("DOMContentLoaded", () => {
     populateDropdown("channel", CHANNELS);
     populateDropdown("concern", CONCERNS);
@@ -67,69 +67,17 @@ function toggleOthers() {
     document.getElementById("concern_others").style.display = (concern === "Others") ? "block" : "none";
 }
 
-// Function to show the toast
-function showToast() {
-    const toastElement = document.getElementById('successToast');
-    const toast = new bootstrap.Toast(toastElement, {
-        delay: 2500 // Mawawala kusa after 2 seconds
-    });
+function showSuccessToast() {
+    const toast = new bootstrap.Toast(document.getElementById('successToast'), 
+    { delay: 3000 });
     toast.show();
 }
 
-/*
-async function submitData() {
-    const btn = document.getElementById("submitBtn");
-    const scriptURL = "https://script.google.com/macros/s/AKfycbw5zI_iZF5Y6_CeVWEOSL0g22B_uIDoXv3VaM1Z5tNsWUCE64kLsfyoXd79-PN7BpTG/exec";
-
-    // UI Feedback: Disable and show loading
-    btn.disabled = true;
-    btn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Syncing...';
-
-    try {
-        // Gather Data
-        const data = {
-            irn: document.getElementById("irn").value.trim(),
-            channel: document.getElementById("channel").value,
-            channel_others: document.getElementById("channel").value === "Others" ? document.getElementById("channel_others").value.trim() : "",
-            content: document.getElementById("content").value.trim(),
-            concern: document.getElementById("concern").value,
-            concern_others: document.getElementById("concern").value === "Others" ? document.getElementById("concern_others").value.trim() : "",
-            verbatim: document.getElementById("verbatim").value.trim()
-        };
-
-        // Success Logic
-        resetForm();
-        showToast();
-        // alert("✅ Insight Logged Successfully!");
-
-        
-        // const successModal = new bootstrap.Modal(document.getElementById("success-alert-modal"));
-        // successModal.show();
-        
-
-        // Send Data
-        await fetch(scriptURL, {
-            method: "POST",
-            body: JSON.stringify(data),
-            mode: "no-cors",
-            headers: { "Content-Type": "text/plain;charset=utf-8" }
-        });
-
-        // Artificial Delay
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert("❌ Failed to submit. Please check your connection.");
-    } finally {
-        // Reset Button
-        btn.disabled = false;
-        btn.innerText = "Submit";
-
-        document.getElementById("irn").focus();
-    }
+function showErrorToast() {
+    const toast = new bootstrap.Toast(document.getElementById('errorToast'), 
+    { delay: 5000 });
+    toast.show();
 }
-*/
 
 async function submitData() {
     const btn = document.getElementById("submitBtn");
@@ -139,6 +87,11 @@ async function submitData() {
     // const endTime = Date.now();
     // const aht = startTime ? Math.round((endTime - startTime) / 1000) : 0;
 
+    if (!navigator.onLine) {
+        showErrorToast();
+        btn.innerHTML = 'Retry Submit';
+        return;
+    }
     // Gather Data
     const data = {
         irn: document.getElementById("irn").value.trim(),
@@ -163,33 +116,36 @@ async function submitData() {
         headers: { "Content-Type": "text/plain;charset=utf-8" }
     }).catch(error => {
         console.error("Background Sync Error:", error);
-        // Pwedeng mag-show ng error toast dito kung gusto mo
+        // Show error toast but still reset form and re-enable button
+        if (typeof showErrorToast === "function") showErrorToast();
+        btn.disabled = false;
+        btn.innerHTML = 'Retry Submit';
     });
 
     setTimeout(() => {
-        showToast();   // Labas agad ang Toast sa Top Right
-        resetForm();    // Linisin agad ang fields
+        // Show success toast and reset form
+        if (typeof showSuccessToast === "function") showSuccessToast();
+        resetForm();
         
         btn.disabled = false;
         btn.innerText = "Submit";
         
-        document.getElementById("irn").focus();
+        const irnInput = document.getElementById("irn");
+        if (irnInput) irnInput.focus();
         // startTime = null;
     }, 400); 
 }
 
 function resetForm() {
-    // Reset inputs
     document.getElementById("irn").value = "";
     document.getElementById("content").value = "";
     document.getElementById("verbatim").value = "";
     document.getElementById("channel_others").value = "";
     document.getElementById("concern_others").value = "";
 
-    // Reset Select2 Dropdowns to placeholder
     $('#channel').val("").trigger('change');
+    $('#concern').val("").trigger('change');
 
-    // Hide Others fields
     document.getElementById("channel_others").style.display = "none";
     document.getElementById("concern_others").style.display = "none";
 }

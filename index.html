@@ -39,7 +39,7 @@
 
                                     <div class="mb-3">
                                         <label for="channel" class="form-label">Channel</label>
-                                        <select class="form-control select2 text-dark" id="channel" required="" data-toggle="select2" onchange="toggleOthers()">
+                                        <select class="form-control select2" id="channel" required="" data-toggle="select2" onchange="toggleOthers()">
                                             <option value="" disabled selected hidden>Select a channel...</option>
                                         </select>
 
@@ -51,9 +51,19 @@
                                         <input class="form-control text-dark" id="content" required="" placeholder="Enter Content/Show">
                                     </div>
 
+                                    <!-- 
                                     <div class="mb-3">
                                         <label for="concern" class="form-label">Concern</label>
                                         <select class="form-select text-dark" id="concern" required="" onchange="toggleOthers()">
+                                            <option value="" disabled selected hidden>Select a concern...</option>
+                                        </select>
+
+                                        <input class="form-control text-dark" id="concern_others" placeholder="Specify concern" style="display: none;">
+                                    </div> -->
+
+                                    <div class="mb-3">
+                                        <label for="concern" class="form-label">Concern</label>
+                                        <select class="form-control select2" id="concern" required="" data-toggle="select2" onchange="toggleOthers()">
                                             <option value="" disabled selected hidden>Select a concern...</option>
                                         </select>
 
@@ -77,17 +87,26 @@
                 </div>
                 <!-- end row -->
 
-                <!-- Toast Container -->
+                <!-- Success Toast Container -->
                 <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
                     <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="d-flex">
                             <div class="toast-body">
-                                <div class="d-flex align-items-center">
-                                    <strong class="me-auto">Success!</strong>
-                                </div>
-                                Insight Logged Successfully!
+                                <strong>Sync Complete!</strong>&nbsp; Insight logged successfully.
                             </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Toast Container -->
+                <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div id="errorToast" class="toast align-items-center text-white bg-danger border-0" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <strong>Sync Failed!</strong>&nbsp; Check your connection and try again.
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                         </div>
                     </div>
                 </div>
