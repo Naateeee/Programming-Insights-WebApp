@@ -1,3 +1,5 @@
+let startTime = null;
+
 const CHANNELS = [
     "A2Z", "AllTV", "GMA", "GTV", "IBC 13", "Kapatid Channel SD/HD", "Net 25", 
     "PRTV Prime Media", "PTV", "RJTV", "RPTV SD/HD", "Solar Flix", "TV5 SD/HD", 
@@ -17,27 +19,52 @@ const CHANNELS = [
     "One News SD/HD", "One PH", "True FM TV", "Animal Planet SD", "Asian Food Network SD", 
     "BBC Earth HD", "DepEd TV", "Discovery Channel SD", "History HD", "Knowledge Channel", 
     "Metro Channel", "Travel Channel SD", "EWTN", "GCTV", "INC", "SONSHINE", "TV Maria", 
-    "UNTV", "Word of God", "ZOE - Light TV 33", "Others"
+    "UNTV", "Word of God", "ZOE - Light TV 33", "beIN Sports", "National Geographics", 
+    "DZMM Teleradyo", "TAP Action Flix", "UPTV", "MPTV", "TAP Edge", "Tech Storm",
+    "Mega Channel Mania", "Fox News", "Disney +", "HGTV", "Global Trekker", "MTV", 
+    "Fight Sports", "ESPN", "Solar Sports", "Bloomberg", "WWE", "Heart of Asia", "Discovery Asia",
+    "Fox Sports", "MPBL", "PTV 4", "Cinema World", "Fashion TV", "AniPlus", "Blast TV", 
+    "Euro News", "Paramount", "Cbeebies", "Zoomoo", "Radyo Veritas", "Tapsilog Channel", 
+    "Star Movies", "Telenovela Channel", "CNBC", "Egg Network", "GEM TV", "Outdoor Channel",
+    "PPOP Channel", "RJTV", "CCTN", "Channel News Asia", "Mango TV", "TLC", "Others"
 ];
 
 const CONCERNS = [
-    "Want to watch the content/show",
-    "Outdated or old content/show",
-    "Repetitive content/show",
+    // Inquiries:
     "Channel information inquiry",
     "Schedule information inquiry",
-    "How to avail",
-    "Request to carry channel/content",
-    "Request to reinstate channel/content",
-    "Request to add new shows",
-    "Complaint on removal or takedown",
+    "How to subscribe/load to watch a channel or content",
+    "Interested to watch",
+    
+    // Requests:
+    "Request to carry channel or content",
+    "Request to reinstate channel or content",
+    "Request to carry new channel or content (but no provided details)",
+    "Request to air replays",
+    "Request for expanded and more extensive coverage",
+    "Request for extension or permanent offering of a promo",
+
+    // Complaints:
+    "Outdated or old content",
+    "Repetitive content",
+    "Complaint on removal/takedown of channel or content",
     "Temporarily unavailable, weak, or no signal",
     "Audio or video concerns",
     "EPG issues",
+    "Limited number of live games",
     "Limited coverage",
+    "Dissatisfaction on the selection of playing teams",
     "Not aired as advertised",
     "Delayed telecast",
-    "Request to air replays",
+    "Logo concerns",
+
+    // Commendations:
+    "Appreciation for new channel or content",
+    "Appreciation for the promo",
+    "Appreciation for a good coverage",
+    "Appreciation for timely posting of schedules",
+    "Cheers and encouragement to players",
+
     "Others"
 ];
 
