@@ -31,50 +31,10 @@
                                     <p class="text-muted mb-3">Track and analyze programming insights and trends.</p>
                                 </div>
 
-                                <!--
-                                <form onsubmit="submitData(); return false;">
-                                    <div class="mb-3">
-                                        <label for="irn" class="form-label">Ticket Number (IRN)</label>
-                                        <input class="form-control text-dark" id="irn" placeholder="Enter Ticket Number (IRN)" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="channel" class="form-label">Channel</label>
-                                        <select class="form-control select2" id="channel" data-toggle="select2" onchange="toggleOthers()" required>
-                                            <option value="" disabled selected hidden>Select a channel...</option>
-                                        </select>
-
-                                        <input class="form-control text-dark" id="channel_others" placeholder="Please specify..." style="display: none;">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="content" class="form-label">Content/Show</label>
-                                        <input class="form-control text-dark" id="content" placeholder="Enter Content/Show" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="concern" class="form-label">Concern</label>
-                                        <select class="form-control select2" id="concern" data-toggle="select2" onchange="toggleOthers()">
-                                            <option value="" disabled selected hidden>Select a concern...</option>
-                                        </select>
-
-                                        <input class="form-control text-dark" id="concern_others" placeholder="Specify concern" style="display: none;">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="verbatim" class="form-label">Verbatim</label>
-                                        <textarea class="form-control text-dark" id="verbatim" rows="3" resize="none" placeholder="Comments" required></textarea>
-                                    </div>
-
-                                    <div class="mb-3 mb-0 text-center">
-                                        <button class="btn btn-primary" id="submitBtn" type="submit"> Submit </button>
-                                    </div>
-                                </form> -->
-
                                 <form class="needs-validation" id="insightForm" novalidate>
                                     <div class="mb-3">
                                         <label for="irn" class="form-label">Ticket Number (IRN)</label>
-                                        <input type="text" class="form-control text-dark" id="irn" placeholder="Enter Ticket Number (IRN)" required>
+                                        <input type="text" class="form-control text-dark" id="irn" placeholder="Enter Ticket Number (IRN)" required data-toggle="input-mask" data-mask-format="IRN000000000000">
                                         <div class="valid-feedback">Looks good!</div>
                                         <div class="invalid-feedback">Please enter a valid Ticket Number (IRN).</div>
                                     </div>

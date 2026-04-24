@@ -1,5 +1,3 @@
-let startTime = null;
-
 const CHANNELS = [
     "A2Z", "AllTV", "GMA", "GTV", "IBC 13", "Kapatid Channel SD/HD", "Net 25", 
     "PRTV Prime Media", "PTV", "RJTV", "RPTV SD/HD", "Solar Flix", "TV5 SD/HD", 
@@ -80,7 +78,7 @@ function populateDropdown(elementId, dataArray) {
     });
 }
 
-// Initialize Select2 and populate dropdowns and set up form submission handler
+// Initialize on load
 document.addEventListener("DOMContentLoaded", () => {
     populateDropdown("channel", CHANNELS);
     populateDropdown("concern", CONCERNS);
@@ -104,7 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     $('.select2').on('change', function() {
-    // Re-validate field on change
     if ($(this).val()) {
         $(this).addClass('is-valid').removeClass('is-invalid');
     } else {
@@ -138,10 +135,6 @@ async function submitData() {
     const form = document.getElementById("insightForm");
     const scriptURL = "https://script.google.com/macros/s/AKfycbw5zI_iZF5Y6_CeVWEOSL0g22B_uIDoXv3VaM1Z5tNsWUCE64kLsfyoXd79-PN7BpTG/exec";
 
-    // AHT Calculation Start
-    // const endTime = Date.now();
-    // const aht = startTime ? Math.round((endTime - startTime) / 1000) : 0;
-
     if (!navigator.onLine) {
         if (typeof showErrorToast === "function") showErrorToast();
         btn.innerHTML = 'Retry Submit';
@@ -156,7 +149,6 @@ async function submitData() {
         concern: document.getElementById("concern").value,
         concern_others: document.getElementById("concern").value === "Others" ? document.getElementById("concern_others").value.trim() : "",
         verbatim: document.getElementById("verbatim").value.trim(),
-        // aht: aht
     };
 
     // UI Feedback: Disable and show loading
@@ -171,17 +163,13 @@ async function submitData() {
         headers: { "Content-Type": "text/plain;charset=utf-8" }
     }).catch(error => {
         console.error("Background Sync Error:", error);
-        // Show error toast but still reset form and re-enable button
         if (typeof showErrorToast === "function") showErrorToast();
         btn.disabled = false;
         btn.innerHTML = 'Retry Submit';
     });
 
     setTimeout(() => {
-        // Show success toast and reset form
         if (typeof showSuccessToast === "function") showSuccessToast();
-
-        // Form cleanup and reset
         resetForm();
         form.classList.remove("was-validated");
         
@@ -190,27 +178,9 @@ async function submitData() {
         
         const irnInput = document.getElementById("irn");
         if (irnInput) irnInput.focus();
-        // startTime = null;
     }, 400); 
 }
 
-/* version 1.0 resetForm: Clears all form fields, resets dropdowns, and hides "Others" input fields 
-function resetForm() {
-    document.getElementById("irn").value = "";
-    document.getElementById("content").value = "";
-    document.getElementById("verbatim").value = "";
-    document.getElementById("channel_others").value = "";
-    document.getElementById("concern_others").value = "";
-
-    $('#channel').val("").trigger('change');
-    $('#concern').val("").trigger('change');
-
-    document.getElementById("channel_others").style.display = "none";
-    document.getElementById("concern_others").style.display = "none";
-}
-*/
-
-// version 2.0 resetForm: Uses form.reset() for efficiency, also resets Select2 and hides "Others" fields
 function resetForm() {
     const form = document.getElementById("insightForm");
     form.reset();
