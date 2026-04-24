@@ -31,15 +31,16 @@
                                     <p class="text-muted mb-3">Track and analyze programming insights and trends.</p>
                                 </div>
 
+                                <!--
                                 <form onsubmit="submitData(); return false;">
                                     <div class="mb-3">
-                                        <label for="irn" class="form-label">IRN</label>
-                                        <input class="form-control text-dark" id="irn" required="" placeholder="Enter IRN">
+                                        <label for="irn" class="form-label">Ticket Number (IRN)</label>
+                                        <input class="form-control text-dark" id="irn" placeholder="Enter Ticket Number (IRN)" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="channel" class="form-label">Channel</label>
-                                        <select class="form-control select2" id="channel" required="" data-toggle="select2" onchange="toggleOthers()">
+                                        <select class="form-control select2" id="channel" data-toggle="select2" onchange="toggleOthers()" required>
                                             <option value="" disabled selected hidden>Select a channel...</option>
                                         </select>
 
@@ -48,22 +49,12 @@
 
                                     <div class="mb-3">
                                         <label for="content" class="form-label">Content/Show</label>
-                                        <input class="form-control text-dark" id="content" required="" placeholder="Enter Content/Show">
+                                        <input class="form-control text-dark" id="content" placeholder="Enter Content/Show" required>
                                     </div>
 
-                                    <!-- 
                                     <div class="mb-3">
                                         <label for="concern" class="form-label">Concern</label>
-                                        <select class="form-select text-dark" id="concern" required="" onchange="toggleOthers()">
-                                            <option value="" disabled selected hidden>Select a concern...</option>
-                                        </select>
-
-                                        <input class="form-control text-dark" id="concern_others" placeholder="Specify concern" style="display: none;">
-                                    </div> -->
-
-                                    <div class="mb-3">
-                                        <label for="concern" class="form-label">Concern</label>
-                                        <select class="form-control select2" id="concern" required="" data-toggle="select2" onchange="toggleOthers()">
+                                        <select class="form-control select2" id="concern" data-toggle="select2" onchange="toggleOthers()">
                                             <option value="" disabled selected hidden>Select a concern...</option>
                                         </select>
 
@@ -72,7 +63,56 @@
 
                                     <div class="mb-3">
                                         <label for="verbatim" class="form-label">Verbatim</label>
-                                        <textarea class="form-control text-dark" id="verbatim" rows="3" resize="none" placeholder="Comments"></textarea>
+                                        <textarea class="form-control text-dark" id="verbatim" rows="3" resize="none" placeholder="Comments" required></textarea>
+                                    </div>
+
+                                    <div class="mb-3 mb-0 text-center">
+                                        <button class="btn btn-primary" id="submitBtn" type="submit"> Submit </button>
+                                    </div>
+                                </form> -->
+
+                                <form class="needs-validation" id="insightForm" novalidate>
+                                    <div class="mb-3">
+                                        <label for="irn" class="form-label">Ticket Number (IRN)</label>
+                                        <input type="text" class="form-control text-dark" id="irn" placeholder="Enter Ticket Number (IRN)" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid Ticket Number (IRN).</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="channel" class="form-label">Channel</label>
+                                        <select class="form-control select2" id="channel" data-toggle="select2" onchange="toggleOthers()" required>
+                                            <option value="" disabled selected hidden>Select a channel...</option>
+                                        </select>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please select a channel.</div>
+
+                                        <input type="text" class="form-control text-dark" id="channel_others" placeholder="Please specify..." style="display: none;">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="content" class="form-label">Content/Show</label>
+                                        <input type="text" class="form-control text-dark" id="content" placeholder="Enter Content/Show" required>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid content/show.</div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="concern" class="form-label">Concern</label>
+                                        <select class="form-control select2" id="concern" data-toggle="select2" onchange="toggleOthers()" required>
+                                            <option value="" disabled selected hidden>Select a concern...</option>
+                                        </select>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please select a concern.</div>
+
+                                        <input type="text" class="form-control text-dark" id="concern_others" placeholder="Specify concern..." style="display: none;">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="verbatim" class="form-label">Verbatim</label>
+                                        <textarea class="form-control text-dark" id="verbatim" rows="3" resize="none" placeholder="Comments" required></textarea>
+                                        <div class="valid-feedback">Looks good!</div>
+                                        <div class="invalid-feedback">Please enter a valid Verbatim.</div>
                                     </div>
 
                                     <div class="mb-3 mb-0 text-center">

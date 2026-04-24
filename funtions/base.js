@@ -26,7 +26,7 @@ const CHANNELS = [
     "Fox Sports", "MPBL", "PTV 4", "Cinema World", "Fashion TV", "AniPlus", "Blast TV", 
     "Euro News", "Paramount", "Cbeebies", "Zoomoo", "Radyo Veritas", "Tapsilog Channel", 
     "Star Movies", "Telenovela Channel", "CNBC", "Egg Network", "GEM TV", "Outdoor Channel",
-    "PPOP Channel", "RJTV", "CCTN", "Channel News Asia", "Mango TV", "TLC", "Others"
+    "PPOP Channel", "RJTV", "CCTN", "Channel News Asia", "Mango TV", "TLC", "Others", "None"
 ];
 
 const CONCERNS = [
@@ -80,10 +80,37 @@ function populateDropdown(elementId, dataArray) {
     });
 }
 
-// Initialize on load
+// Initialize Select2 and populate dropdowns and set up form submission handler
 document.addEventListener("DOMContentLoaded", () => {
     populateDropdown("channel", CHANNELS);
     populateDropdown("concern", CONCERNS);
+
+    const form = document.getElementById('insightForm');
+    
+    if (form) { 
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                
+                const firstInvalid = form.querySelector(':invalid');
+                if (firstInvalid) firstInvalid.focus();
+            } else {
+                submitData();
+            }
+        }, false);
+    }
+
+    $('.select2').on('change', function() {
+    // Re-validate field on change
+    if ($(this).val()) {
+        $(this).addClass('is-valid').removeClass('is-invalid');
+    } else {
+        $(this).addClass('is-invalid').removeClass('is-valid');
+    }
+});
 });
 
 function toggleOthers() {
@@ -108,6 +135,7 @@ function showErrorToast() {
 
 async function submitData() {
     const btn = document.getElementById("submitBtn");
+    const form = document.getElementById("insightForm");
     const scriptURL = "https://script.google.com/macros/s/AKfycbw5zI_iZF5Y6_CeVWEOSL0g22B_uIDoXv3VaM1Z5tNsWUCE64kLsfyoXd79-PN7BpTG/exec";
 
     // AHT Calculation Start
@@ -115,7 +143,7 @@ async function submitData() {
     // const aht = startTime ? Math.round((endTime - startTime) / 1000) : 0;
 
     if (!navigator.onLine) {
-        showErrorToast();
+        if (typeof showErrorToast === "function") showErrorToast();
         btn.innerHTML = 'Retry Submit';
         return;
     }
@@ -152,7 +180,10 @@ async function submitData() {
     setTimeout(() => {
         // Show success toast and reset form
         if (typeof showSuccessToast === "function") showSuccessToast();
+
+        // Form cleanup and reset
         resetForm();
+        form.classList.remove("was-validated");
         
         btn.disabled = false;
         btn.innerText = "Submit";
@@ -163,6 +194,7 @@ async function submitData() {
     }, 400); 
 }
 
+/* version 1.0 resetForm: Clears all form fields, resets dropdowns, and hides "Others" input fields 
 function resetForm() {
     document.getElementById("irn").value = "";
     document.getElementById("content").value = "";
@@ -173,6 +205,18 @@ function resetForm() {
     $('#channel').val("").trigger('change');
     $('#concern').val("").trigger('change');
 
+    document.getElementById("channel_others").style.display = "none";
+    document.getElementById("concern_others").style.display = "none";
+}
+*/
+
+// version 2.0 resetForm: Uses form.reset() for efficiency, also resets Select2 and hides "Others" fields
+function resetForm() {
+    const form = document.getElementById("insightForm");
+    form.reset();
+    
+    $('.select2').val(null).trigger('change');
+    
     document.getElementById("channel_others").style.display = "none";
     document.getElementById("concern_others").style.display = "none";
 }
