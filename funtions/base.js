@@ -219,9 +219,35 @@ async function submitData() {
 function resetForm() {
     const form = document.getElementById("insightForm");
     form.reset();
-    
-    $('.select2').val(null).trigger('change');
-    
-    document.getElementById("channel_others").style.display = "none";
-    document.getElementById("concern_others").style.display = "none";
+
+    // Reset regular inputs and textarea
+    $(form).find('.form-control:not(.select2)').each(function () {
+        $(this).removeClass('is-valid is-invalid');
+    });
+
+    // Reset Select2 dropdowns and clear their visual validation states
+    $('.select2').each(function () {
+        $(this).val(null).trigger('change');
+        $(this).removeClass('is-valid is-invalid');
+        $(this).next('.select2-container')
+            .removeClass('select2-valid select2-invalid');
+    });
+
+    // Hide and reset the "Others" inputs
+    $('#channel_others')
+        .hide()
+        .val('')
+        .removeAttr('required')
+        .attr('disabled', true)
+        .removeClass('is-valid is-invalid');
+
+    $('#concern_others')
+        .hide()
+        .val('')
+        .removeAttr('required')
+        .attr('disabled', true)
+        .removeClass('is-valid is-invalid');
+
+    // Remove Bootstrap's form-level validation class
+    form.classList.remove('was-validated');
 }
