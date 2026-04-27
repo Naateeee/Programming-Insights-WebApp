@@ -83,8 +83,38 @@ document.addEventListener("DOMContentLoaded", () => {
     populateDropdown("channel", CHANNELS);
     populateDropdown("concern", CONCERNS);
 
+    // Initialize Select2 after dropdowns are populated
+    $('.select2').select2();
+
+    // Attach Select2-compatible change listeners
+    $('#channel').on('change', toggleOthers);
+    $('#concern').on('change', toggleOthers);
+
+    // Live validation — inputs & textarea
+    $(document).on('input', '.form-control:not(.select2)', function () {
+        if ($(this).is(':hidden') || $(this).is(':disabled')) return;
+
+        if ($(this).val().trim()) {
+            $(this).addClass('is-valid').removeClass('is-invalid');
+        } else {
+            $(this).addClass('is-invalid').removeClass('is-valid');
+        }
+    });
+
+    // Live validation — Select2
+    $('.select2').on('change', function () {
+    const $container = $(this).next('.select2-container');
+
+    if ($(this).val()) {
+        $container.addClass('select2-valid').removeClass('select2-invalid');
+        $(this).addClass('is-valid').removeClass('is-invalid');
+    } else {
+        $container.addClass('select2-invalid').removeClass('select2-valid');
+        $(this).addClass('is-invalid').removeClass('is-valid');
+    }
+});
+
     const form = document.getElementById('insightForm');
-    
     if (form) { 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -92,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!form.checkValidity()) {
                 form.classList.add('was-validated');
-                
                 const firstInvalid = form.querySelector(':invalid');
                 if (firstInvalid) firstInvalid.focus();
             } else {
@@ -100,22 +129,28 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }, false);
     }
-
-    $('.select2').on('change', function() {
-    if ($(this).val()) {
-        $(this).addClass('is-valid').removeClass('is-invalid');
-    } else {
-        $(this).addClass('is-invalid').removeClass('is-valid');
-    }
-});
 });
 
 function toggleOthers() {
-    const channel = document.getElementById("channel").value;
-    const concern = document.getElementById("concern").value;
+    const channel = $('#channel').val();
+    const concern = $('#concern').val();
 
-    document.getElementById("channel_others").style.display = (channel === "Others") ? "block" : "none";
-    document.getElementById("concern_others").style.display = (concern === "Others") ? "block" : "none";
+    const $channelOthers = $('#channel_others');
+    const $concernOthers = $('#concern_others');
+
+    // Channel
+    if (channel === 'Others') {
+        $channelOthers.show().attr('required', true).removeAttr('disabled');
+    } else {
+        $channelOthers.hide().removeAttr('required').attr('disabled', true).val('').removeClass('is-invalid is-valid');
+    }
+
+    // Concern
+    if (concern === 'Others') {
+        $concernOthers.show().attr('required', true).removeAttr('disabled');
+    } else {
+        $concernOthers.hide().removeAttr('required').attr('disabled', true).val('').removeClass('is-invalid is-valid');
+    }
 }
 
 function showSuccessToast() {

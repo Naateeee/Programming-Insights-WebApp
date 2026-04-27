@@ -41,13 +41,19 @@
 
                                     <div class="mb-3">
                                         <label for="channel" class="form-label">Channel</label>
-                                        <select class="form-control select2" id="channel" data-toggle="select2" onchange="toggleOthers()" required>
-                                            <option value="" disabled selected hidden>Select a channel...</option>
-                                        </select>
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please select a channel.</div>
+                                        <div>
+                                            <select class="form-control select2" id="channel" data-toggle="select2" onchange="toggleOthers()" required>
+                                                <option value="" disabled selected hidden>Select a channel...</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please select a channel.</div>
+                                        </div>
 
-                                        <input type="text" class="form-control text-dark" id="channel_others" placeholder="Please specify..." style="display: none;">
+                                        <div>
+                                            <input type="text" class="form-control text-dark" id="channel_others" placeholder="Please specify..." style="display: none;" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please specify your channel.</div>
+                                        </div>
                                     </div>
 
                                     <div class="mb-3">
@@ -59,13 +65,20 @@
 
                                     <div class="mb-3">
                                         <label for="concern" class="form-label">Concern</label>
-                                        <select class="form-control select2" id="concern" data-toggle="select2" onchange="toggleOthers()" required>
-                                            <option value="" disabled selected hidden>Select a concern...</option>
-                                        </select>
-                                        <div class="valid-feedback">Looks good!</div>
-                                        <div class="invalid-feedback">Please select a concern.</div>
+                                        <div>
+                                            <select class="form-control select2" id="concern" data-toggle="select2" onchange="toggleOthers()" required>
+                                                <option value="" disabled selected hidden>Select a concern...</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please select a concern.</div>
+                                        </div>
 
-                                        <input type="text" class="form-control text-dark" id="concern_others" placeholder="Specify concern..." style="display: none;">
+                                        <div>
+                                            <input type="text" class="form-control text-dark" id="concern_others" placeholder="Specify concern..." style="display: none;" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please specify your concern.</div>
+                                        </div>
+                                        
                                     </div>
 
                                     <div class="mb-3">
